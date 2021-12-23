@@ -99,6 +99,17 @@ public class Compiler {
             ILChunk[] ret = new ILChunk[out.size()];
             ret = out.toArray(new ILChunk[ret.length]);
             return ret;
+        } else if(i instanceof WhileLoop) {
+            ILChunk[] body = Compile(((WhileLoop)i).body);
+            int BlobIndex = NextAvailableFpointer;
+            NextAvailableFpointer += (body.length + 1) * 2;
+            DataSection.addAll(Arrays.asList(body));
+            DataSection.add(new ILChunk(OpCode.Ret, (byte)0x00));
+            ArrayList<ILChunk> out = new ArrayList<>(); 
+            out.add(new ILChunk(OpCode.While, (byte)BlobIndex));
+            ILChunk[] ret = new ILChunk[out.size()];
+            ret = out.toArray(new ILChunk[ret.length]);
+            return ret;
         }
         System.out.println("[x] Cannot compile object " + i);
         dump();

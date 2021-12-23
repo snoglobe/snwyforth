@@ -1,0 +1,11 @@
+: prtch dup 0 trap ;
+: getch 1 trap ;
+: exit 2 trap ;
+
+getch
+if 48 = : 
+    0 prtch 0 exit
+;
+1 dup while : 
+    dup prtch
+;

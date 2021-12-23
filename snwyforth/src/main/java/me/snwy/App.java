@@ -15,8 +15,12 @@ public class App
         String actual = Files.readString(Path.of(args[0]));
         Lexer l = new Lexer(actual);
         l.Lex();
+        if(verbose)
+            System.out.println("[i] Tokens : " + l.Tokens);
         Parser p = new Parser(l.Tokens);
         ASTNode AST = p.root();
+        if(verbose)
+            System.out.println("[i] AST : " + AST);
         Compiler c = new Compiler((Root)AST);
         c.Compile();
         if(verbose)

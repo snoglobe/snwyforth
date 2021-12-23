@@ -37,8 +37,8 @@ enum OpCode {
     Nip((byte)0x15), // ( a b -- b ) : 0x15
     Tuck((byte)0x16), // ( a b -- b a b ) : 0x16
     FCall((byte)0x17), // Function call - oparg is function pointer
-    Ret((byte)0x18); // return thing : 0x18
-
+    Ret((byte)0x18), // return thing : 0x18
+    While((byte)0x19); // while loop - oparg is body;
     byte opcode;
 
     OpCode(byte op) {

@@ -59,17 +59,15 @@ class IfStatement extends ASTNode {
 }
 
 class WhileLoop extends ASTNode {
-    GroupNode condition;
     GroupNode body;
 
-    WhileLoop(GroupNode cNode, GroupNode bNode){
-        this.condition = cNode;
+    WhileLoop(GroupNode bNode){
         this.body = bNode;
     }
 
     @Override
     public String toString(){
-        return "while " + condition.toString() + " : " + body.toString();
+        return "while : " + body.toString();
     }
 }
 

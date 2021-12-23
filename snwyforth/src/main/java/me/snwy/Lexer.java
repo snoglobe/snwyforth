@@ -7,7 +7,7 @@ import org.javatuples.Pair;
 
 public class Lexer {
     static enum TokenType {
-        LBrace, RBrace, Macro, If, Word, Int, Colon, Semicolon
+        LBrace, RBrace, Macro, If, Word, Int, Colon, Semicolon, While
     }
 
     List<Pair<TokenType, String>> Tokens; // too lazy to define my own Token type, so this works
@@ -29,6 +29,8 @@ public class Lexer {
                 case "if":
                     Tokens.add(new Pair<TokenType, String>(TokenType.If, "if"));
                     break;
+                case "while":
+                    Tokens.add(new Pair<TokenType, String>(TokenType.While, "while"));
                 case " ":
                     break;
                 case "":

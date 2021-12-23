@@ -71,8 +71,13 @@ class VM {
                 switch(trap) {
                     case 0x0:
                         System.out.print(stack.pop().toString());
+                        break;
                     case 0x1:
                         stack.push((byte)System.in.read());
+                        break;
+                    case 0x2:
+                        System.exit(stack.pop());
+                        break;
                 } 
                 break;
             case 0x03:
@@ -103,10 +108,10 @@ class VM {
                 stack.push((byte)(stack.pop() >= stack.pop() ? 1 : 0));
                 break;
             case 0x0C:
-                stack.push((byte)(stack.pop() < stack.pop() ? 1 : 0));
+                stack.push((byte)(stack.pop() > stack.pop() ? 1 : 0));
                 break;
             case 0x0D:
-                stack.push((byte)(stack.pop() > stack.pop() ? 1 : 0));
+                stack.push((byte)(stack.pop() < stack.pop() ? 1 : 0));
                 break;
             case 0x0E:
                 if(stack.pop() != 0) {
@@ -169,6 +174,11 @@ class VM {
             case 0x17: {
                 ExecuteStream(GetStream(oparg));
                 break;
+            }
+            case 0x19: {
+                while(stack.pop() != 0){
+                    ExecuteStream(GetStream(oparg));
+                }
             }
         }
     }
