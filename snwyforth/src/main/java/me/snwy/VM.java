@@ -57,7 +57,8 @@ class VM {
     }
 
     void Execute(byte instr, byte oparg) throws IOException {
-        System.out.println(stack);
+        if(App.verbose)
+            System.out.println(stack);
         switch(instr){
             case 0x00:
                 stack.push(Byte.valueOf(oparg));
