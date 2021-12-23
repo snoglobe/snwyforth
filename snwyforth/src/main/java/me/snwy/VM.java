@@ -1,5 +1,6 @@
 package me.snwy;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
@@ -27,14 +28,14 @@ class VM {
         return bytes;
     }
 
-    void Step() {
+    void Step() throws IOException {
         byte instr = program[pc];
         byte oparg = program[++pc];
         Execute(instr, oparg);
         pc++;
     }
 
-    void ExecuteStream(byte[] code){
+    void ExecuteStream(byte[] code) throws IOException{
         for(int lpc = 0; lpc < code.length; lpc += 1){
             byte instr = code[lpc];
             byte oparg = code[++lpc];
@@ -55,7 +56,7 @@ class VM {
         return toPrimitives(temp);
     }
 
-    void Execute(byte instr, byte oparg) {
+    void Execute(byte instr, byte oparg) throws IOException {
         System.out.println(stack);
         switch(instr){
             case 0x00:
@@ -65,8 +66,13 @@ class VM {
                 // TODO: remove this
                 break;
             case 0x02:
-                // TODO: implement trap instruction
-                // wow i am not excited to do this
+                byte trap = stack.pop();
+                switch(trap) {
+                    case 0x0:
+                        System.out.print(stack.pop().toString());
+                    case 0x1:
+                        stack.push((byte)System.in.read());
+                } 
                 break;
             case 0x03:
                 stack.push((byte)(stack.pop() + stack.pop()));

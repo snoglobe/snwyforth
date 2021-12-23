@@ -1,0 +1,4 @@
+: print dup 0 trap ;
+: getch 1 trap ;
+
+getch print

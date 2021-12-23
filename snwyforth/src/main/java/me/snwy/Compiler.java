@@ -48,7 +48,7 @@ public class Compiler {
             if(i instanceof Macro) {
                 ILChunk[] compiled = Compile(i);
                 int BlobIndex = NextAvailableFpointer;
-                NextAvailableFpointer += compiled.length;
+                NextAvailableFpointer += (compiled.length + 1) * 2;
                 DataSection.addAll(Arrays.asList(compiled));
                 DataSection.add(new ILChunk(OpCode.Ret, (byte)0x00));
                 FunctionPointers.put(((Macro)i).Name, ((byte)BlobIndex));
@@ -91,7 +91,7 @@ public class Compiler {
             ILChunk[] cond = Compile(((IfStatement)i).condition);
             ILChunk[] body = Compile(((IfStatement)i).body);
             int BlobIndex = NextAvailableFpointer;
-            NextAvailableFpointer += body.length;
+            NextAvailableFpointer += (body.length + 1) * 2;
             DataSection.addAll(Arrays.asList(body));
             DataSection.add(new ILChunk(OpCode.Ret, (byte)0x00));
             ArrayList<ILChunk> out = new ArrayList<>(Arrays.asList(cond)); 
