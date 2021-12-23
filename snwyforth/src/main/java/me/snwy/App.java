@@ -1,6 +1,8 @@
 package me.snwy;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -64,6 +66,11 @@ public class App
             sc.close();
         }
     }
+
+    public static String thisPath() throws UnsupportedEncodingException{
+        String path = Path.of(App.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent().toString();
+        return URLDecoder.decode(path, "UTF-8");
+    } 
 
     static byte[] ILChunkToList(List<ILChunk> chunks){
         Byte[] program = new Byte[chunks.size() * 2];

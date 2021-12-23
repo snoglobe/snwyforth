@@ -110,7 +110,12 @@ public class Parser {
         for(int in = 0; in < root.Program.size(); in++){
             ASTNode i = root.Program.get(in);
             if(i instanceof ImportStatement) {
-                String Program = Files.readString(Path.of(((ImportStatement)i).toImport));
+                String path = ((ImportStatement)i).toImport;
+                String Program;
+                if(Files.exists(Path.of(App.thisPath() + "/dict/" + path)))
+                    Program = Files.readString(Path.of(App.thisPath() + "/dict/" + path));
+                else
+                    Program = Files.readString(Path.of(path));
                 Lexer l = new Lexer(Program);
                 l.Lex();
                 Parser p = new Parser(l.Tokens);

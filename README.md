@@ -40,10 +40,12 @@ Over ( a -- a b a )
 Nip ( a b -- b )
 Tuck ( a b -- b a b )
 ```  
-you can import another program with 
+you can import another program with
 ```
 import <path to program>
 ```
+it will be looked for in `<jar-location>/dict/<file>` first, and if not found there it will be looked for in your working path.
+to install a new vocabulary, just plop the `.sf` file(s) into `<jar-location>/dict/`.  
 other than that it's a standard forth lol  
 example programs in `test/`
 
