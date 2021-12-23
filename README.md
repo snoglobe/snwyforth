@@ -5,7 +5,7 @@ compiled to bytecode
 
 # usage
 `snwyforth [program] [-v : verbose]`
-snwyforth has/will have a REPL which is loaded if you don't provide a program.
+snwyforth has a REPL which is loaded if you don't provide a program.
 
 # how to use
 an if statement goes like   
