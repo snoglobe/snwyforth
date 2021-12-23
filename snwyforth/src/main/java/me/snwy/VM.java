@@ -3,7 +3,6 @@ package me.snwy;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.Stack;
 
 class VM {
@@ -68,10 +67,10 @@ class VM {
 
     void Execute(byte instr, byte oparg) throws IOException {
         switch(instr){
-            case 0x00:
+            case 0x00: // push
                 stack.push(Byte.valueOf(oparg));
                 break;
-            case 0x02:
+            case 0x02: // trap
                 byte trap = stack.pop();
                 switch(trap) {
                     case 0x0:
@@ -94,55 +93,55 @@ class VM {
                         break;
                 } 
                 break;
-            case 0x03:
+            case 0x03: // add
                 stack.push((byte)(stack.pop() + stack.pop()));
                 break;
-            case 0x04:
+            case 0x04: // sub
                 stack.push((byte)(stack.pop() - stack.pop()));
                 break;
-            case 0x05:
+            case 0x05: // mul
                 stack.push((byte)(stack.pop() * stack.pop()));
                 break;
-            case 0x06:
+            case 0x06: // div
                 stack.push((byte)(stack.pop() / stack.pop()));
                 break;
-            case 0x07:
+            case 0x07: // mod
                 stack.push((byte)(stack.pop() % stack.pop()));
                 break;
-            case 0x08:
+            case 0x08: // equals
                 stack.push((byte)(stack.pop() == stack.pop() ? 1 : 0));
                 break;
-            case 0x09:
+            case 0x09: // doesn't equal
                 stack.push((byte)(stack.pop() != stack.pop() ? 1 : 0));
                 break;
-            case 0x0A:
+            case 0x0A: // greater or equal
                 stack.push((byte)(stack.pop() <= stack.pop() ? 1 : 0));
                 break;
-            case 0x0B:
+            case 0x0B: // less or equal
                 stack.push((byte)(stack.pop() >= stack.pop() ? 1 : 0));
                 break;
-            case 0x0C:
+            case 0x0C: // greater than
                 stack.push((byte)(stack.pop() > stack.pop() ? 1 : 0));
                 break;
-            case 0x0D:
+            case 0x0D: // less than
                 stack.push((byte)(stack.pop() < stack.pop() ? 1 : 0));
                 break;
-            case 0x0E:
+            case 0x0E: // if
                 if(stack.pop() != 0) {
                     ExecuteStream(GetStream(oparg));
                 }
                 break;
-            case 0x0F:
+            case 0x0F: // dup
                 stack.push(stack.peek());
                 break;
-            case 0x10: {
+            case 0x10: { // swap
                 byte a = stack.pop();
                 byte b = stack.pop();
                 stack.push(a);
                 stack.push(b);
                 break;
             }
-            case 0x11: {
+            case 0x11: { // rotl
                 byte c = stack.pop();
                 byte b = stack.pop();
                 byte a = stack.pop();
@@ -151,7 +150,7 @@ class VM {
                 stack.push(a);
                 break;
             }
-            case 0x12: {
+            case 0x12: { // rotr
                 byte c = stack.pop();
                 byte b = stack.pop();
                 byte a = stack.pop();
@@ -160,11 +159,11 @@ class VM {
                 stack.push(b);
                 break;
             }
-            case 0x13: {
+            case 0x13: { // drop
                 stack.pop();
                 break;
             }
-            case 0x14: {
+            case 0x14: { // over
                 byte a = stack.pop();
                 byte b = stack.pop();
                 stack.push(a);
@@ -172,13 +171,13 @@ class VM {
                 stack.push(a);
                 break;
             }
-            case 0x15: {
+            case 0x15: { // nip
                 byte a = stack.pop();
                 stack.pop();
                 stack.push(a);
                 break;
             }
-            case 0x16: {
+            case 0x16: { // tuck
                 byte b = stack.pop();
                 byte a = stack.pop();
                 stack.push(b);
@@ -186,11 +185,11 @@ class VM {
                 stack.push(b);
                 break;
             }
-            case 0x17: {
+            case 0x17: { // word execute
                 ExecuteStream(GetStream(oparg));
                 break;
             }
-            case 0x19: {
+            case 0x19: { // while
                 while(stack.pop() != 0){
                     ExecuteStream(GetStream(oparg));
                 }
