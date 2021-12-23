@@ -63,7 +63,7 @@ public class Compiler {
         if(i instanceof Word) {
             if(!BuiltinWords.containsKey(((Word)i).word)){
                 if(!FunctionPointers.containsKey(((Word)i).word)) {
-                    System.out.println("[x] Undefined word " + ((Word)i).word);
+                    System.out.println("? " + ((Word)i).word);
                 } else {
                     return new ILChunk[]{ new ILChunk(OpCode.FCall, FunctionPointers.get(((Word)i).word).byteValue())};
                 }
@@ -111,7 +111,7 @@ public class Compiler {
             ret = out.toArray(new ILChunk[ret.length]);
             return ret;
         }
-        System.out.println("[x] Cannot compile object " + i);
+        System.out.println("compile? " + i);
         dump();
         return null;
     }

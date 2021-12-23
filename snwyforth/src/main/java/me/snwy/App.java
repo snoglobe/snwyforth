@@ -59,7 +59,7 @@ public class App
                 while(vm.pc < vm.program.length){
                     vm.Step();
                 }
-                System.out.println("[i] ok");
+                System.out.println(" ok");
             }
             sc.close();
         }
