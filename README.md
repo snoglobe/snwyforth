@@ -23,8 +23,10 @@ while :
 list of traps:  
 ```
 0x0 : print as decimal number to stdout
-0x1 : get character and push to stack as ASCII value
-0x2 : pop stack and exit with code
+0x1 : print as ascii
+0x2 : get character and push to stack as ASCII value
+0x3 : pop stack and exit with code
+0x4 : terminal bell
 ```
 builtin words:  
 ```
