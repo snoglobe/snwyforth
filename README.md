@@ -6,3 +6,19 @@ compiled to bytecode
 # usage
 `snwyforth [program] [-v : verbose]`
 snwyforth has/will have a REPL which is loaded if you don't provide a program.
+
+# how to use
+an if statement goes like   
+```
+if <condition to eval> :
+    <stuff to do>
+;
+```  
+a while statement goes like  
+```
+while :
+    <stuff to do, every loop it will test the top of the stack>
+;
+```  
+other than that it's a standard forth lol  
+example programs in `test/`
