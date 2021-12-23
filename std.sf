@@ -1,0 +1,7 @@
+: . 0 trap ;
+: emit 1 trap ;
+: cr 13 10 emit emit ;
+: 0= 0 = ;
+: 1+ 1 + ;
+: 1- 1 tuck drop - ;
+

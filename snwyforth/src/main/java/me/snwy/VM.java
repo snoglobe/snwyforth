@@ -77,9 +77,11 @@ class VM {
                         System.out.print(stack.pop().toString());
                         break;
                     case 0x1:
+                        System.out.print(new String(new byte[]{stack.pop()}, "US-ASCII"));
+                    case 0x2:
                         stack.push((byte)System.in.read());
                         break;
-                    case 0x2:
+                    case 0x3:
                         System.exit(stack.pop());
                         break;
                 } 
@@ -174,6 +176,7 @@ class VM {
                 stack.push(b);
                 stack.push(a);
                 stack.push(b);
+                break;
             }
             case 0x17: {
                 ExecuteStream(GetStream(oparg));
@@ -183,6 +186,7 @@ class VM {
                 while(stack.pop() != 0){
                     ExecuteStream(GetStream(oparg));
                 }
+                break;
             }
         }
         if(App.verbose)
