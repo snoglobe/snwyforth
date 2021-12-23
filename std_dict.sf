@@ -1,0 +1,5 @@
+: print 0 trap ;
+: getch 1 trap ;
+: readf 2 trap ;
+: writef 3 trap ;
+: nop dup drop ;

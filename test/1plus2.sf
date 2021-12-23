@@ -1,4 +1,0 @@
-: foo 1 + ;
-: bar 2 + ;
-1 foo bar
-if dup drop : foo foo bar ;

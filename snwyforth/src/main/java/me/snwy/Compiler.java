@@ -50,6 +50,7 @@ public class Compiler {
                 int BlobIndex = NextAvailableFpointer;
                 NextAvailableFpointer += compiled.length;
                 DataSection.addAll(Arrays.asList(compiled));
+                DataSection.add(new ILChunk(OpCode.Ret, (byte)0x00));
                 FunctionPointers.put(((Macro)i).Name, ((byte)BlobIndex));
             } else {
                 Compiled.addAll(Arrays.asList(Compile(i)));
@@ -92,6 +93,7 @@ public class Compiler {
             int BlobIndex = NextAvailableFpointer;
             NextAvailableFpointer += body.length;
             DataSection.addAll(Arrays.asList(body));
+            DataSection.add(new ILChunk(OpCode.Ret, (byte)0x00));
             ArrayList<ILChunk> out = new ArrayList<>(Arrays.asList(cond)); 
             out.add(new ILChunk(OpCode.If, (byte)BlobIndex));
             ILChunk[] ret = new ILChunk[out.size()];
@@ -108,10 +110,5 @@ public class Compiler {
         System.out.println("[i] Compiled " + Compiled.toString());
         System.out.println("[i] FunctionPointers " + FunctionPointers.toString());
         System.out.println("[i] DataSection " + DataSection.toString());
-    }
-
-    @Override
-    public String toString(){
-        return "Code : " + Compiled.toString() + "\nWord Storage : " + DataSection.toString() + "\nFunction Pointers : " + FunctionPointers.toString();  
     }
 }

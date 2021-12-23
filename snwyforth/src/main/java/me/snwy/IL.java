@@ -36,7 +36,9 @@ enum OpCode {
     Over((byte)0x14), // ( a -- a b a ) : 0x14
     Nip((byte)0x15), // ( a b -- b ) : 0x15
     Tuck((byte)0x16), // ( a b -- b a b ) : 0x16
-    FCall((byte)0x17); // Function call - oparg is function pointer
+    FCall((byte)0x17), // Function call - oparg is function pointer
+    Ret((byte)0x18); // return thing : 0x18
+
     byte opcode;
 
     OpCode(byte op) {
@@ -65,6 +67,10 @@ class ILChunk {
 
     @Override
     public String toString(){
-        return opCode.name() + "(" + Integer.toString(((int)opArg) & 0xff) + ")";
+        return opCode.name() + String.format(": 0x%02X", opCode.opcode) + "(" + String.format("0x%02X", opArg) + ")";
+    }
+
+    public byte[] toBytes() {
+        return new byte[] {opCode.opcode, opArg};
     }
 }
