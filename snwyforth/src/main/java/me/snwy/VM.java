@@ -28,6 +28,15 @@ class VM {
         return bytes;
     }
 
+    static Byte[] toObjects(byte[] bytesPrim) {
+
+        Byte[] bytes = new Byte[bytesPrim.length];
+        int i = 0;
+        for (byte b : bytesPrim) bytes[i++] = b; //Autoboxing
+        return bytes;
+    
+    }
+
     void Step() throws IOException {
         byte instr = program[pc];
         byte oparg = program[++pc];
@@ -57,14 +66,9 @@ class VM {
     }
 
     void Execute(byte instr, byte oparg) throws IOException {
-        if(App.verbose)
-            System.out.println(stack);
         switch(instr){
             case 0x00:
                 stack.push(Byte.valueOf(oparg));
-                break;
-            case 0x01:
-                // TODO: remove this
                 break;
             case 0x02:
                 byte trap = stack.pop();
@@ -181,6 +185,8 @@ class VM {
                 }
             }
         }
+        if(App.verbose)
+            dump();
     }
 
     void dump(){

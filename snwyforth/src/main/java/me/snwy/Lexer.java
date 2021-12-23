@@ -37,7 +37,7 @@ public class Lexer {
                     break;
                 default:
                     try {
-                        Double.parseDouble(T); // is it numeric? this will throw if not
+                        Integer.parseInt(T); // is it numeric? this will throw if not
                         Tokens.add(new Pair<TokenType, String>(TokenType.Int, T)); // idk why i called it "int" since doubles also can be parsed
                     } catch (NumberFormatException e) {
                         Tokens.add(new Pair<TokenType, String>(TokenType.Word, T));
