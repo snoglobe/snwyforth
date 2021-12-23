@@ -7,6 +7,7 @@
 : 1- 1 tuck drop - ;
 : 2- 2 tuck drop - ;
 : 2+ 2 + ;
-: ?dup dup if 0 != dup ;
+: ?dup dup if 0 != : dup ; ;
 : bell 4 trap ;
 : abort 3 trap ;
+: num 5 trap ;

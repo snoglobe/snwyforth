@@ -27,6 +27,7 @@ list of traps:
 0x2 : get character and push to stack as ASCII value
 0x3 : pop stack and exit with code
 0x4 : terminal bell
+0x5 : input as decimal
 ```
 builtin words:  
 ```
@@ -39,6 +40,10 @@ Over ( a -- a b a )
 Nip ( a b -- b )
 Tuck ( a b -- b a b )
 ```  
+you can import another program with 
+```
+import <path to program>
+```
 other than that it's a standard forth lol  
 example programs in `test/`
 

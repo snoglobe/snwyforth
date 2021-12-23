@@ -98,3 +98,15 @@ class Root extends ASTNode {
         return Program.toString();
     }
 }
+
+class ImportStatement extends ASTNode {
+    String toImport;
+    ImportStatement(String toImport){
+        this.toImport = toImport;
+    }
+
+    @Override
+    public String toString() {
+        return "import " + toImport;
+    }
+}

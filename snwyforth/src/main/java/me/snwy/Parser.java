@@ -1,5 +1,7 @@
 package me.snwy;
 
+import java.nio.file.Path;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import org.javatuples.Pair;
@@ -80,9 +82,14 @@ public class Parser {
         return new Macro((GroupNode)body, name);
     }
 
+    ASTNode imports() throws Exception {
+        eat(TokenType.Import);
+        return new ImportStatement(eat(TokenType.Word));
+    }
+
     ASTNode root() throws Exception {
         Root root = new Root(new ArrayList<ASTNode>());
-        while(peek(TokenType.If) || peek(TokenType.Int) || peek(TokenType.Word) || peek(TokenType.Colon) || peek(TokenType.While)) {
+        while(peek(TokenType.If) || peek(TokenType.Int) || peek(TokenType.Word) || peek(TokenType.Colon) || peek(TokenType.While) || peek(TokenType.Import)) {
             if(peek(TokenType.If)) {
                 root.Program.add(ifs());
             } else if(peek(TokenType.Int)) {
@@ -93,10 +100,26 @@ public class Parser {
                 root.Program.add(worddef());
             } else if(peek(TokenType.While)){
                 root.Program.add(whiles());
+            } else if(peek(TokenType.Import)){
+                root.Program.add(imports());
             } else {
                 continue;
             }
         }
+        ArrayList<ASTNode> ImportAST = new ArrayList<>();
+        for(int in = 0; in < root.Program.size(); in++){
+            ASTNode i = root.Program.get(in);
+            if(i instanceof ImportStatement) {
+                String Program = Files.readString(Path.of(((ImportStatement)i).toImport));
+                Lexer l = new Lexer(Program);
+                l.Lex();
+                Parser p = new Parser(l.Tokens);
+                ImportAST.addAll(((Root)p.root()).Program);
+                root.Program.remove(i);
+            }
+        }
+        ImportAST.addAll(root.Program);
+        root.Program = ImportAST;
         return root;
     }
 

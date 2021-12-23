@@ -7,7 +7,7 @@ import org.javatuples.Pair;
 
 public class Lexer {
     static enum TokenType {
-        LBrace, RBrace, Macro, If, Word, Int, Colon, Semicolon, While
+        LBrace, RBrace, If, Word, Int, Colon, Semicolon, While, Import
     }
 
     List<Pair<TokenType, String>> Tokens; // too lazy to define my own Token type, so this works
@@ -17,9 +17,6 @@ public class Lexer {
     {
         for(String T : Text.split("\\s")) // for ease of lexing, everything is space-delimited
             switch(T){
-                case ":w":
-                    Tokens.add(new Pair<TokenType, String>(TokenType.Macro, ":w"));
-                    break;
                 case ":":
                     Tokens.add(new Pair<TokenType, String>(TokenType.Colon, ":"));
                     break;
@@ -31,6 +28,8 @@ public class Lexer {
                     break;
                 case "while":
                     Tokens.add(new Pair<TokenType, String>(TokenType.While, "while"));
+                case "import":
+                    Tokens.add(new Pair<TokenType, String>(TokenType.Import, ":import"));
                 case " ":
                     break;
                 case "":

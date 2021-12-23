@@ -3,6 +3,7 @@ package me.snwy;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.Stack;
 
 class VM {
@@ -78,6 +79,7 @@ class VM {
                         break;
                     case 0x1:
                         System.out.print(new String(new byte[]{stack.pop()}, "US-ASCII"));
+                        break;
                     case 0x2:
                         stack.push((byte)System.in.read());
                         break;
@@ -86,6 +88,9 @@ class VM {
                         break;
                     case 0x4:
                         System.out.print((char)7);
+                        break;
+                    case 0x5:
+                        stack.push((byte)Integer.parseInt(System.console().readLine()));
                         break;
                 } 
                 break;
