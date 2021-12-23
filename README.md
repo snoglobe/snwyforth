@@ -39,3 +39,7 @@ Tuck ( a b -- b a b )
 ```  
 other than that it's a standard forth lol  
 example programs in `test/`
+
+# building
+you'll need `mvn`  
+just run `mvn package` in the `snwyforth/` folder
