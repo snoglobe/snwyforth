@@ -84,6 +84,9 @@ class VM {
                     case 0x3:
                         System.exit(stack.pop());
                         break;
+                    case 0x4:
+                        System.out.print((char)7);
+                        break;
                 } 
                 break;
             case 0x03:
