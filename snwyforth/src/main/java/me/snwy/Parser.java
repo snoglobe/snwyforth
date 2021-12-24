@@ -24,7 +24,7 @@ public class Parser {
 
     String eat(TokenType type) throws Exception {
         if(!peek(type))
-            throw new Exception("Unexpected token " + type.name());
+            throw new Exception("Unexpected token " + TokenStream.get(0).getValue0());
         return TokenStream.remove(0).getValue1();
     }
 
@@ -44,7 +44,15 @@ public class Parser {
 
     ASTNode group() throws NumberFormatException, Exception {
         GroupNode gnode = new GroupNode(new ArrayList<ASTNode>());
-        while(peek(TokenType.If) || peek(TokenType.Int) || peek(TokenType.Word) || peek(TokenType.While)){
+        while(peek(TokenType.If) 
+        || peek(TokenType.Int) 
+        || peek(TokenType.Word) 
+        || peek(TokenType.While) 
+        || peek(TokenType.Store)
+        || peek(TokenType.Gptr)
+        || peek(TokenType.Sptr)
+        || peek(TokenType.Iptr)
+        || peek(TokenType.Dptr)){
             if(peek(TokenType.If))
                 gnode.Items.add(ifs());
             if(peek(TokenType.Int))
@@ -53,6 +61,16 @@ public class Parser {
                 gnode.Items.add(word());
             if(peek(TokenType.While))
                 gnode.Items.add(whiles());
+            if(peek(TokenType.Store))
+                gnode.Items.add(store());
+            if(peek(TokenType.Gptr))
+                gnode.Items.add(gpointer());
+            else if(peek(TokenType.Sptr))
+                gnode.Items.add(spointer());
+            else if(peek(TokenType.Iptr))
+                gnode.Items.add(ipointer());
+            else if(peek(TokenType.Dptr))
+                gnode.Items.add(dpointer());
         }
         return gnode;
     }
@@ -87,9 +105,50 @@ public class Parser {
         return new ImportStatement(eat(TokenType.Word));
     }
 
+    ASTNode store() throws Exception {
+        eat(TokenType.Store);
+        return new StoreStatement(eat(TokenType.Word));
+    }
+
+    ASTNode pointer() throws Exception {
+        eat(TokenType.Pointer);
+        return new PointerStatement(eat(TokenType.Word));
+    }
+
+    ASTNode gpointer() throws Exception {
+        eat(TokenType.Gptr);
+        return new GPtrStatement(eat(TokenType.Word));
+    }
+
+    ASTNode spointer() throws Exception {
+        eat(TokenType.Sptr);
+        return new SPtrStatement(eat(TokenType.Word));
+    }
+
+    ASTNode ipointer() throws Exception {
+        eat(TokenType.Iptr);
+        return new IPtrStatement(eat(TokenType.Word));
+    }
+
+    ASTNode dpointer() throws Exception {
+        eat(TokenType.Dptr);
+        return new DPtrStatement(eat(TokenType.Word));
+    }
+
     ASTNode root() throws Exception {
         Root root = new Root(new ArrayList<ASTNode>());
-        while(peek(TokenType.If) || peek(TokenType.Int) || peek(TokenType.Word) || peek(TokenType.Colon) || peek(TokenType.While) || peek(TokenType.Import)) {
+        while(peek(TokenType.If) 
+        || peek(TokenType.Int) 
+        || peek(TokenType.Word) 
+        || peek(TokenType.Colon) 
+        || peek(TokenType.While) 
+        || peek(TokenType.Import) 
+        || peek(TokenType.Store) 
+        || peek(TokenType.Pointer)
+        || peek(TokenType.Gptr)
+        || peek(TokenType.Sptr)
+        || peek(TokenType.Iptr)
+        || peek(TokenType.Dptr)) {
             if(peek(TokenType.If)) {
                 root.Program.add(ifs());
             } else if(peek(TokenType.Int)) {
@@ -102,6 +161,18 @@ public class Parser {
                 root.Program.add(whiles());
             } else if(peek(TokenType.Import)){
                 root.Program.add(imports());
+            } else if(peek(TokenType.Pointer)){
+                root.Program.add(pointer());
+            } else if(peek(TokenType.Store)){
+                root.Program.add(store());
+            } else if(peek(TokenType.Gptr)){
+                root.Program.add(gpointer());
+            } else if(peek(TokenType.Sptr)){
+                root.Program.add(spointer());
+            } else if(peek(TokenType.Iptr)){
+                root.Program.add(ipointer());
+            } else if(peek(TokenType.Dptr)){
+                root.Program.add(dpointer());
             } else {
                 continue;
             }

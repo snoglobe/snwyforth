@@ -61,7 +61,7 @@ public class App
                 while(vm.pc < vm.program.length){
                     vm.Step();
                 }
-                System.out.println(" ok");
+                System.out.println(vm.failed ? " ?" : " ok");
             }
             sc.close();
         }

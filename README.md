@@ -46,6 +46,34 @@ import <path to program>
 ```
 it will be looked for in `<jar-location>/dict/<file>` first, and if not found there it will be looked for in your working path.
 to install a new vocabulary, just plop the `.sf` file(s) into `<jar-location>/dict/`.  
+you can store data into a name with
+```
+<value> store <name>
+```
+be warned that only the first char of the name identifies it.  
+there are pointers too. think of them as an array kind-of.
+to create a pointer
+```
+<len> ptr <name>
+```
+be warned that only the first char of the name identifies it.  
+to increment the pointer
+```
+iptr <name>
+```
+to decrement the pointer
+```
+dptr <name>
+```
+to push the value of the pointer
+```
+gptr <name>
+```
+to set the value of the pointer
+```
+<value> sptr <name>
+```
+
 other than that it's a standard forth lol  
 example programs in `test/`
 

@@ -7,7 +7,7 @@ import org.javatuples.Pair;
 
 public class Lexer {
     static enum TokenType {
-        LBrace, RBrace, If, Word, Int, Colon, Semicolon, While, Import
+        LBrace, RBrace, If, Word, Int, Colon, Semicolon, While, Import, Pointer, Store, Gptr, Sptr, Iptr, Dptr
     }
 
     List<Pair<TokenType, String>> Tokens; // too lazy to define my own Token type, so this works
@@ -28,8 +28,28 @@ public class Lexer {
                     break;
                 case "while":
                     Tokens.add(new Pair<TokenType, String>(TokenType.While, "while"));
+                    break;
                 case "import":
-                    Tokens.add(new Pair<TokenType, String>(TokenType.Import, ":import"));
+                    Tokens.add(new Pair<TokenType, String>(TokenType.Import, "import"));
+                    break;
+                case "ptr":
+                    Tokens.add(new Pair<TokenType, String>(TokenType.Pointer, "ptr"));
+                    break;
+                case "gptr":
+                    Tokens.add(new Pair<TokenType, String>(TokenType.Gptr, "gptr"));
+                    break;
+                case "sptr":
+                    Tokens.add(new Pair<TokenType, String>(TokenType.Sptr, "sptr"));
+                    break;
+                case "iptr":
+                    Tokens.add(new Pair<TokenType, String>(TokenType.Iptr, "iptr"));
+                    break;
+                case "dptr":
+                    Tokens.add(new Pair<TokenType, String>(TokenType.Dptr, "dptr"));
+                    break;
+                case "store":
+                    Tokens.add(new Pair<TokenType, String>(TokenType.Store, "store"));
+                    break;
                 case " ":
                     break;
                 case "":

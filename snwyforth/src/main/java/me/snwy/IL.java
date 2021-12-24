@@ -36,9 +36,20 @@ enum OpCode {
     Over((byte)0x14), // ( a -- a b a ) : 0x14
     Nip((byte)0x15), // ( a b -- b ) : 0x15
     Tuck((byte)0x16), // ( a b -- b a b ) : 0x16
+
     FCall((byte)0x17), // Function call - oparg is function pointer
     Ret((byte)0x18), // return thing : 0x18
-    While((byte)0x19); // while loop - oparg is body;
+
+    While((byte)0x19), // while loop - oparg is body;
+
+    Alloc((byte)0x1A), // ptr alloc - pop() is length, oparg is slot
+    Store((byte)0x1B), // store - pop() is value, oparg is slot
+
+    IncPointer((byte)0x1C), // increment pointer - slot is oparg
+    DecPointer((byte)0x1D), // decrement pointer - slot is oparg
+    SetPointer((byte)0x1E), // set pointer - value is pop()
+    GetPointer((byte)0x1F), // get pointer - pushes value under pointer to the stack
+    GetStored((byte)0x20); // get stored - oparg is slot
     byte opcode;
 
     OpCode(byte op) {

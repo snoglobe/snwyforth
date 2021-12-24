@@ -11,7 +11,6 @@ public class Compiler {
     List<ILChunk> DataSection;
     HashMap<String, Byte> FunctionPointers = new HashMap<>();
     int NextAvailableFpointer = 0;
-
     private static final HashMap<String, Byte> BuiltinWords = new HashMap<>();
     static {
         BuiltinWords.put("trap", Byte.valueOf((byte)0x02));
@@ -63,7 +62,7 @@ public class Compiler {
         if(i instanceof Word) {
             if(!BuiltinWords.containsKey(((Word)i).word)){
                 if(!FunctionPointers.containsKey(((Word)i).word)) {
-                    System.out.println("? " + ((Word)i).word);
+                    return new ILChunk[]{ new ILChunk(OpCode.GetStored, (byte)((Word)i).word.toCharArray()[0])}; // ehh just look it up at runtime what could go wrong
                 } else {
                     return new ILChunk[]{ new ILChunk(OpCode.FCall, FunctionPointers.get(((Word)i).word).byteValue())};
                 }
@@ -110,7 +109,19 @@ public class Compiler {
             ILChunk[] ret = new ILChunk[out.size()];
             ret = out.toArray(new ILChunk[ret.length]);
             return ret;
-        }
+        } else if(i instanceof PointerStatement) {
+            return new ILChunk[]{new ILChunk(OpCode.Alloc, (byte)((PointerStatement)i).name)};
+        } else if(i instanceof GPtrStatement) {
+            return new ILChunk[]{new ILChunk(OpCode.GetPointer, (byte)((GPtrStatement)i).name)};
+        } else if(i instanceof SPtrStatement) {
+            return new ILChunk[]{new ILChunk(OpCode.SetPointer, (byte)((SPtrStatement)i).name)};
+        } else if(i instanceof IPtrStatement) {
+            return new ILChunk[]{new ILChunk(OpCode.IncPointer, (byte)((IPtrStatement)i).name)};
+        } else if(i instanceof DPtrStatement) {
+            return new ILChunk[]{new ILChunk(OpCode.DecPointer, (byte)((DPtrStatement)i).name)};
+        } else if(i instanceof StoreStatement) {
+            return new ILChunk[]{new ILChunk(OpCode.Store, (byte)((StoreStatement)i).name)};
+        } 
         System.out.println("compile? " + i);
         dump();
         return null;

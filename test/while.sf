@@ -1,11 +1,9 @@
-: prtch dup 0 trap ;
-: getch 2 trap ;
-: exit 3 trap ;
+import std.sf
 
-getch
-if 48 = : 
-    0 prtch 0 exit
+num dup if 0 = :
+    . cr 0 abort
 ;
-1 dup while : 
-    dup prtch
+
+1 dup while :
+    dup dup .
 ;

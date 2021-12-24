@@ -110,3 +110,51 @@ class ImportStatement extends ASTNode {
         return "import " + toImport;
     }
 }
+
+class PointerStatement extends ASTNode {
+    int name;
+
+    PointerStatement(String name) {
+        this.name = name.toCharArray()[0];
+    }
+}
+
+class GPtrStatement extends ASTNode {
+    int name;
+
+    GPtrStatement(String name) {
+        this.name = name.toCharArray()[0];
+    }
+}
+
+class DPtrStatement extends ASTNode {
+    int name;
+
+    DPtrStatement(String name) {
+        this.name = name.toCharArray()[0];
+    }
+}
+
+class IPtrStatement extends ASTNode {
+    int name;
+
+    IPtrStatement(String name) {
+        this.name = name.toCharArray()[0];
+    }
+}
+
+class SPtrStatement extends ASTNode {
+    int name;
+
+    SPtrStatement(String name) {
+        this.name = name.toCharArray()[0];
+    }
+}
+
+class StoreStatement extends ASTNode {
+    int name;
+
+    StoreStatement(String name) {
+        this.name = name.toCharArray()[0];
+    }
+}

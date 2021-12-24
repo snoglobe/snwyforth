@@ -1,0 +1,6 @@
+import std.sf
+0 get dup
+while : 
+    dup emit
+;
+cr 
