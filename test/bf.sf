@@ -1,0 +1,5 @@
+import std.sf
+
+0 gets dup while :
+    if dup 
+;

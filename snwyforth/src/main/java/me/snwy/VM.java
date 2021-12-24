@@ -2,6 +2,7 @@ package me.snwy;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -10,13 +11,22 @@ class VM {
     byte[] data;
     HashMap<String, Byte> symbols;
     Stack<Byte> stack;
+    byte[][] PointerStorage = new byte[255][];
+    int[] PointerIndexes = new int[255];
+    int[] ValueStorage = new int[255];
     int pc = 0;
+
+    boolean failed;
 
     VM(byte[] program, byte[] data, HashMap<String, Byte> symbols){
         this.program = program;
         this.data = data;
         this.symbols = symbols;
         this.stack = new Stack<>();
+
+        for(int i = 0; i < 255; i++) {
+            ValueStorage[i] = -1;
+        }
     }
 
     static byte[] toPrimitives(Byte[] oBytes)
@@ -66,6 +76,7 @@ class VM {
     }
 
     void Execute(byte instr, byte oparg) throws IOException {
+        failed = false;
         switch(instr){
             case 0x00: // push
                 stack.push(Byte.valueOf(oparg));
@@ -90,6 +101,14 @@ class VM {
                         break;
                     case 0x5:
                         stack.push((byte)Integer.parseInt(System.console().readLine()));
+                        break;
+                    case 0x6:
+                        ArrayList<Character> c = new ArrayList<>();
+                        for(char i : System.console().readLine().toCharArray()) {
+                            c.add(i);
+                        } Collections.reverse(c); for (Character i : c) {
+                            stack.push((byte)i.charValue());
+                        }
                         break;
                 } 
                 break;
@@ -193,6 +212,38 @@ class VM {
                 while(stack.pop() != 0){
                     ExecuteStream(GetStream(oparg));
                 }
+                break;
+            }
+            case 0x1A: {
+                PointerStorage[oparg] = new byte[(int)stack.pop()];
+                PointerIndexes[oparg] = 0;
+                break;
+            }
+            case 0x1B: {
+                ValueStorage[oparg] = stack.pop();
+                break;
+            }
+            case 0x1C: {
+                PointerIndexes[oparg]++;
+                break;
+            }
+            case 0x1D: {
+                PointerIndexes[oparg]--;
+                break;
+            }
+            case 0x1E: {
+                PointerStorage[oparg][PointerIndexes[oparg]] = stack.pop();
+                break;
+            }
+            case 0x1F: {
+                stack.push(PointerStorage[oparg][PointerIndexes[oparg]]);
+                break;
+            }
+            case 0x20: {
+                if(ValueStorage[oparg] != -1)
+                    stack.push((byte)ValueStorage[oparg]);
+                else
+                    failed = true;
                 break;
             }
         }
