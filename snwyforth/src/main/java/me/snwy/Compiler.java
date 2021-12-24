@@ -41,7 +41,7 @@ public class Compiler {
         this.DataSection = new ArrayList<>();
     }
 
-    // i'd rather deepthroat a cactus than maintain this ever
+    // i'd rather suck a cactus off than maintain this ever
     void Compile() {
         for(ASTNode i : ASTree.Program) {
             if(i instanceof Macro) {
