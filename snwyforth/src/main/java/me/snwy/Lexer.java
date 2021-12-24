@@ -1,13 +1,14 @@
 package me.snwy;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.javatuples.Pair;
 
 public class Lexer {
     static enum TokenType {
-        LBrace, RBrace, If, Word, Int, Colon, Semicolon, While, Import, Pointer, Store, Gptr, Sptr, Iptr, Dptr
+        LBrace, RBrace, If, Word, Int, Colon, Semicolon, While, Import, Pointer, Store, Gptr, Sptr, Iptr, Dptr, Lp, Rp
     }
 
     List<Pair<TokenType, String>> Tokens; // too lazy to define my own Token type, so this works
@@ -50,6 +51,12 @@ public class Lexer {
                 case "store":
                     Tokens.add(new Pair<TokenType, String>(TokenType.Store, "store"));
                     break;
+                case "(":
+                    Tokens.add(new Pair<TokenType, String>(TokenType.Lp, "("));
+                    break;
+                case ")":
+                    Tokens.add(new Pair<TokenType, String>(TokenType.Lp, ")"));
+                    break;
                 case " ":
                     break;
                 case "":
@@ -63,6 +70,18 @@ public class Lexer {
                     }
                     break;
             }
+        
+        Iterator<Pair<TokenType, String>> iter = Tokens.iterator();
+        while(iter.hasNext()) {
+            String v = iter.next().getValue1();
+            if(v == "(") {
+                iter.remove();
+                while(iter.hasNext() && iter.next().getValue1() != ")"){
+                    iter.remove();
+                }
+            }
+        }
+        Tokens.removeIf(x -> x.getValue1() == ")");
     }
 
     Lexer(String Program){

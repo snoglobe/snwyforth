@@ -64,7 +64,7 @@ class VM {
         }
     }
 
-    byte[] GetStream(byte base){
+    byte[] GetStream(int base){
         ArrayList<Byte> outchunk = new ArrayList<>();
         int i = base;
         while(data[i] != 0x18) {
@@ -210,7 +210,7 @@ class VM {
             }
             case 0x19: { // while
                 while(stack.pop() != 0){
-                    ExecuteStream(GetStream(oparg));
+                    ExecuteStream(GetStream((int)(oparg & 0xff)));
                 }
                 break;
             }

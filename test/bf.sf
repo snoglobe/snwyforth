@@ -1,5 +1,29 @@
 import std.sf
 
-0 gets dup while :
-    if dup 
+127 ptr tape
+
+0 get dup while : 
+    if 62 = : 
+        ( iptr tape )
+    ;
+
+    if 60 = :
+        ( dptr tape )
+    ;
+
+    if 43 = :
+        ( gptr tape 1 + sptr tape )
+    ;
+
+    if 45 = :
+        ( gptr tape 1 - sptr tape )
+    ;
+
+    if 46 = :
+        ( gptr tape emit )
+    ;
+
+    if 44 = :
+        ( key sptr tape )
+    ;
 ;
