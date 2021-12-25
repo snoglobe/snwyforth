@@ -1,3 +1,8 @@
-snwyforth/target
+snwyforth/target/*.jar
+snwyforth/target/classes
+snwyforth/target/generated-sources
+snwyforth/target/maven-archiver
+snwyforth/target/maven-status
+snwyforth/target/test-classes
 .vscode
 .VSCodeCounter
