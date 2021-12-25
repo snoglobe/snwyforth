@@ -1,29 +1,22 @@
-import std.sf
-
-127 ptr tape
-
-0 get dup while : 
-    if 62 = : 
-        ( iptr tape )
+0 6 trap dup
+while : 
+    dup if 91 = : ( l bracket )
+        1 trap
     ;
-
-    if 60 = :
-        ( dptr tape )
+    dup if 93 = : ( r bracket )
+        1 trap
     ;
-
-    if 43 = :
-        ( gptr tape 1 + sptr tape )
+    dup if 43 = : ( plus )
+        1 trap
     ;
-
-    if 45 = :
-        ( gptr tape 1 - sptr tape )
+    dup if 45 = : ( minus )
+        1 trap
     ;
-
-    if 46 = :
-        ( gptr tape emit )
+    dup if 44 = : ( comma )
+        1 trap
     ;
-
-    if 44 = :
-        ( key sptr tape )
+    dup if 46 = : ( period )
+        1 trap
     ;
+    drop
 ;
